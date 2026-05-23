@@ -19,6 +19,42 @@ const QUIZZES = {
       { q: 'What is RAM used for?', options: ['Permanent storage', 'Processing graphics', 'Temporary memory', 'Network connection'], correct: 2, tag: 'Hardware' },
       { q: 'What does CPU stand for?', options: ['Computer Processing Unit', 'Central Power Unit', 'Central Processing Unit', 'Core Processing Unit'], correct: 2, tag: 'Hardware' },
     ]
+  },
+  '3': {
+    title: 'Python OOP — Quiz',
+    questions: [
+      { q: 'Which keyword is used to create a class in Python?', options: ['class', 'def', 'init', 'object'], correct: 0, tag: 'Classes' },
+      { q: 'What is the name of the special method used as a constructor in Python?', options: ['__init__', '__new__', 'constructor', 'init'], correct: 0, tag: 'Constructors' },
+      { q: 'Which concept allows a class to inherit attributes and methods from another class?', options: ['Inheritance', 'Encapsulation', 'Polymorphism', 'Abstraction'], correct: 0, tag: 'Inheritance' },
+      { q: 'What does the "self" parameter refer to inside a class method?', options: ['The current instance of the class', 'The class itself', 'The parent class', 'A global variable'], correct: 0, tag: 'Self Reference' },
+    ]
+  },
+  '4': {
+    title: 'Data Structures with Python — Quiz',
+    questions: [
+      { q: 'Which Python data structure is mutable and defined with square brackets?', options: ['List', 'Tuple', 'Dictionary', 'Set'], correct: 0, tag: 'Lists' },
+      { q: 'Which data structure uses key-value pairs?', options: ['Dictionary', 'List', 'Set', 'Tuple'], correct: 0, tag: 'Dictionaries' },
+      { q: 'What type of data structure follows the Last-In, First-Out (LIFO) principle?', options: ['Stack', 'Queue', 'Linked List', 'Tree'], correct: 0, tag: 'Stacks' },
+      { q: 'Which method is used to add an item to the end of a Python list?', options: ['append()', 'add()', 'insert()', 'push()'], correct: 0, tag: 'Lists' },
+    ]
+  },
+  '5': {
+    title: 'Database & SQL Basics — Quiz',
+    questions: [
+      { q: 'What does SQL stand for?', options: ['Structured Query Language', 'Simple Query Language', 'Structured Question Language', 'System Query Logic'], correct: 0, tag: 'SQL Basics' },
+      { q: 'Which SQL statement is used to retrieve data from a database?', options: ['SELECT', 'GET', 'RETRIEVE', 'FETCH'], correct: 0, tag: 'Retrieving Data' },
+      { q: 'Which clause is used to filter records in a SELECT query?', options: ['WHERE', 'FILTER', 'HAVING', 'GROUP BY'], correct: 0, tag: 'Filtering Data' },
+      { q: 'What does a PRIMARY KEY do in a database table?', options: ['Uniquely identifies each record', 'Speeds up text search only', 'Links two tables together', 'Allows duplicate values'], correct: 0, tag: 'Database Keys' },
+    ]
+  },
+  '6': {
+    title: 'Web Technologies — Quiz',
+    questions: [
+      { q: 'What does HTML stand for?', options: ['HyperText Markup Language', 'HighText Machine Language', 'HyperTransfer Markup Language', 'HyperText Model Links'], correct: 0, tag: 'HTML' },
+      { q: 'Which technology is primarily used to style and lay out web pages?', options: ['CSS', 'HTML', 'JavaScript', 'PHP'], correct: 0, tag: 'CSS' },
+      { q: 'Which keyword is used to declare a block-scoped variable in modern JavaScript?', options: ['let', 'var', 'constant', 'global'], correct: 0, tag: 'JavaScript' },
+      { q: 'What is the default port number for HTTP communication?', options: ['80', '443', '8080', '3000'], correct: 0, tag: 'Networking' },
+    ]
   }
 };
 

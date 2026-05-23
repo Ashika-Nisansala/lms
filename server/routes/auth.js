@@ -38,4 +38,29 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/students', async (req, res) => {
+  try {
+    const studentsList = await User.find({ role: 'student' }).select('-password');
+    res.json(studentsList);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.delete('/students/:id', async (req, res) => {
+  try {
+    const student = await User.findById(req.params.id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    if (student.role !== 'student') {
+      return res.status(400).json({ message: 'Cannot delete admin users through this route' });
+    }
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Student removed successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 export default router;

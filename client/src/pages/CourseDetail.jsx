@@ -20,6 +20,42 @@ const COURSE_DATA = {
       { id: 'l2', title: 'Computer Hardware', content: 'Hardware refers to the physical components of a computer system:\n\n- **CPU** – Central Processing Unit (the brain)\n- **RAM** – Random Access Memory (temporary storage)\n- **HDD/SSD** – Hard Drive (permanent storage)\n- **GPU** – Graphics Processing Unit', videoUrl: '', orderIndex: 2 },
     ]
   },
+  '3': {
+    title: 'Python OOP', emoji: '🔧', color: 'from-green-500 to-teal-500',
+    description: 'Master Object Oriented Programming in Python: classes, inheritance, polymorphism.',
+    lessons: [
+      { id: 'l1', title: 'Introduction to OOP', content: 'Object-Oriented Programming (OOP) is a programming paradigm that uses "objects" to represent data and methods. It helps structure software into reusable blueprints (classes) to make it more organized and maintainable.', videoUrl: '', orderIndex: 1 },
+      { id: 'l2', title: 'Classes and Objects', content: 'A Class is a blueprint or template, while an Object is an instance of that class.\n\n```python\nclass Dog:\n    def __init__(self, name):\n        self.name = name\n\nmy_dog = Dog("Buddy")\nprint(my_dog.name)  # Buddy\n```', videoUrl: '', orderIndex: 2 },
+      { id: 'l3', title: 'Inheritance & Polymorphism', content: 'Inheritance allows a child class to inherit attributes and methods from a parent class. Polymorphism allows different classes to have methods with the same name but different behaviors.\n\n```python\nclass Animal:\n    def speak(self):\n        return "Sound"\n\nclass Cat(Animal):\n    def speak(self):\n        return "Meow"\n\nmy_cat = Cat()\nprint(my_cat.speak())  # Meow\n```', videoUrl: '', orderIndex: 3 },
+    ]
+  },
+  '4': {
+    title: 'Data Structures with Python', emoji: '📊', color: 'from-orange-500 to-red-500',
+    description: 'Lists, tuples, dictionaries, sets, stacks and queues explained with Python.',
+    lessons: [
+      { id: 'l1', title: 'Lists & Tuples', content: 'Lists are ordered, mutable collections of items. Tuples are ordered, immutable collections.\n\n```python\nmy_list = [1, 2, 3]\nmy_list.append(4)  # Allowed\n\nmy_tuple = (1, 2, 3)\n# my_tuple[0] = 5  # TypeError (immutable)\n```', videoUrl: '', orderIndex: 1 },
+      { id: 'l2', title: 'Dictionaries & Sets', content: 'Dictionaries store data in key-value pairs for fast lookups. Sets store unique, unordered elements.\n\n```python\nmy_dict = {"name": "Alice", "age": 20}\nprint(my_dict["name"])  # Alice\n\nmy_set = {1, 2, 2, 3}  # {1, 2, 3} (duplicates automatically removed)\n```', videoUrl: '', orderIndex: 2 },
+      { id: 'l3', title: 'Stacks & Queues', content: 'A Stack is a LIFO (Last-In, First-Out) structure. A Queue is a FIFO (First-In, First-Out) structure.\n\n```python\n# Stack (using list)\nstack = []\nstack.append(1)\nstack.pop()\n\n# Queue (using deque)\nfrom collections import deque\nqueue = deque([1, 2])\nqueue.append(3)\nqueue.popleft()  # 1\n```', videoUrl: '', orderIndex: 3 },
+    ]
+  },
+  '5': {
+    title: 'Database & SQL Basics', emoji: '🗄️', color: 'from-indigo-500 to-purple-500',
+    description: 'Introduction to databases, SQL queries, and database design principles.',
+    lessons: [
+      { id: 'l1', title: 'What is a Database?', content: 'A database is an organized collection of structured data, typically stored electronically. Relational databases use tables consisting of columns and rows to model relationships.', videoUrl: '', orderIndex: 1 },
+      { id: 'l2', title: 'SQL SELECT Queries', content: 'SQL (Structured Query Language) is used to query relational databases.\n\n```sql\nSELECT name, age \nFROM students \nWHERE age > 18;\n```\nThis query retrieves name and age columns of all students older than 18.', videoUrl: '', orderIndex: 2 },
+      { id: 'l3', title: 'Primary & Foreign Keys', content: 'A Primary Key uniquely identifies each record in a table. A Foreign Key is a field in one table that uniquely identifies a row of another table, creating a link between them.', videoUrl: '', orderIndex: 3 },
+    ]
+  },
+  '6': {
+    title: 'Web Technologies', emoji: '🌐', color: 'from-pink-500 to-rose-500',
+    description: 'HTML, CSS, JavaScript basics and how the web works.',
+    lessons: [
+      { id: 'l1', title: 'HTML Structure', content: 'HTML (HyperText Markup Language) is the standard markup language for creating web pages. It defines the structure using tags like <h1>, <p>, and <div>.', videoUrl: '', orderIndex: 1 },
+      { id: 'l2', title: 'CSS Styling', content: 'CSS (Cascading Style Sheets) is used to design and format the layout of web pages. It controls colors, fonts, spacing, alignment, and responsive behaviors.', videoUrl: '', orderIndex: 2 },
+      { id: 'l3', title: 'JavaScript Interactivity', content: 'JavaScript is a programming language that runs in the browser, allowing you to add dynamic features, animations, and handle user actions.\n\n```javascript\ndocument.querySelector("button").addEventListener("click", () => {\n    alert("Clicked!");\n});\n```', videoUrl: '', orderIndex: 3 },
+    ]
+  },
 };
 
 export default function CourseDetail() {

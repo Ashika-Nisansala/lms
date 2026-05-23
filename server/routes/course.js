@@ -57,4 +57,27 @@ router.post('/:id/lessons', async (req, res) => {
   }
 });
 
+// Update a course
+router.put('/:id', async (req, res) => {
+  try {
+    const course = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!course) return res.status(404).json({ message: 'Course not found' });
+    res.json(course);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Delete a course
+router.delete('/:id', async (req, res) => {
+  try {
+    const course = await Course.findByIdAndDelete(req.params.id);
+    if (!course) return res.status(404).json({ message: 'Course not found' });
+    await Lesson.deleteMany({ courseId: req.params.id });
+    res.json({ message: 'Course and associated lessons deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 export default router;
