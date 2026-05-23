@@ -1,6 +1,7 @@
 import express from 'express';
 import Course from '../models/Course.js';
 import Lesson from '../models/Lesson.js';
+import User from '../models/User.js';
 
 const router = express.Router();
 
@@ -8,8 +9,21 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const courses = await Course.find().populate('instructorId', 'name email');
-    res.json(courses);
+    
+    // Find lesson counts and enrolled student counts for each course
+    const coursesWithStats = await Promise.all(courses.map(async (course) => {
+      const lessonCount = await Lesson.countDocuments({ courseId: course._id });
+      const enrolledCount = await User.countDocuments({ enrolledCourses: course._id });
+      
+      const courseObj = course.toObject();
+      courseObj.lessonsCount = lessonCount;
+      courseObj.enrolledCount = enrolledCount;
+      return courseObj;
+    }));
+    
+    res.json(coursesWithStats);
   } catch (error) {
+    console.error('Error fetching courses:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -19,8 +33,17 @@ router.get('/:id', async (req, res) => {
   try {
     const course = await Course.findById(req.params.id).populate('instructorId', 'name email');
     if (!course) return res.status(404).json({ message: 'Course not found' });
-    res.json(course);
+    
+    const lessonCount = await Lesson.countDocuments({ courseId: course._id });
+    const enrolledCount = await User.countDocuments({ enrolledCourses: course._id });
+    
+    const courseObj = course.toObject();
+    courseObj.lessonsCount = lessonCount;
+    courseObj.enrolledCount = enrolledCount;
+    
+    res.json(courseObj);
   } catch (error) {
+    console.error('Error fetching course:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

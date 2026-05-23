@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { RadialBarChart, RadialBar, ResponsiveContainer } from 'recharts';
@@ -24,9 +24,35 @@ const recommendations = [
 export default function StudentDashboard() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [showNotice, setShowNotice] = useState(localStorage.getItem('google_mock_notice') === 'true');
+
+  const dismissNotice = () => {
+    localStorage.removeItem('google_mock_notice');
+    setShowNotice(false);
+  };
 
   return (
     <div className="space-y-6">
+      {/* Developer Mock Google Login Banner */}
+      {showNotice && (
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start justify-between gap-3 animate-fade-in">
+          <div className="flex gap-3">
+            <span className="text-2xl">🚀</span>
+            <div>
+              <h4 className="font-bold text-amber-900 text-sm">Local Developer Mode Active</h4>
+              <p className="text-xs text-amber-800 mt-1 leading-relaxed">
+                You have logged in using the **Developer Mock Google Sign-In** bypass. 
+                A mock student account (`developer.google@lms.edu`) was automatically registered in MongoDB, 
+                granting immediate access. To use a real Google account, register a `GOOGLE_CLIENT_ID` in your `.env`.
+              </p>
+            </div>
+          </div>
+          <button onClick={dismissNotice} className="text-amber-500 hover:text-amber-700 cursor-pointer font-bold text-sm px-1.5 py-0.5 hover:bg-amber-100 rounded-lg transition-colors">
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-indigo-600 to-purple-600 p-6 rounded-2xl text-white shadow-lg">
         <div>

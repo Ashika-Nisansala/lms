@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const COURSE_DATA = {
   '1': {
@@ -63,14 +64,80 @@ export default function CourseDetail() {
   const navigate = useNavigate();
   const [activeLesson, setActiveLesson] = useState(0);
   const [completed, setCompleted] = useState([]);
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const course = COURSE_DATA[id] || COURSE_DATA['1'];
-  const lesson = course.lessons[activeLesson];
+  useEffect(() => {
+    const fetchCourseDetails = async () => {
+      try {
+        setLoading(true);
+        // If it's a mock ID (e.g. '1', '2' etc.), load directly from COURSE_DATA
+        if (id && id.length < 10) {
+          if (COURSE_DATA[id]) {
+            setCourse(COURSE_DATA[id]);
+          } else {
+            setCourse(COURSE_DATA['1']);
+          }
+          return;
+        }
+
+        // Otherwise fetch course info from backend
+        const courseRes = await axios.get(`http://localhost:5000/api/courses/${id}`);
+        // Fetch lessons from backend
+        const lessonsRes = await axios.get(`http://localhost:5000/api/courses/${id}/lessons`);
+        
+        setCourse({
+          title: courseRes.data.title,
+          description: courseRes.data.description,
+          emoji: courseRes.data.category?.toLowerCase().includes('python') ? '🐍' : '💻',
+          color: courseRes.data.category?.toLowerCase().includes('python') ? 'from-blue-500 to-cyan-500' : 'from-purple-500 to-pink-500',
+          lessons: lessonsRes.data.length > 0 ? lessonsRes.data.map(l => ({
+            id: l._id,
+            title: l.title,
+            content: l.content,
+            videoUrl: l.videoUrl || '',
+            orderIndex: l.orderIndex
+          })) : [
+            { id: 'empty', title: 'No Lessons Yet', content: 'Lessons are being developed for this course. Please check back later!', orderIndex: 1 }
+          ]
+        });
+      } catch (err) {
+        console.error('Failed to fetch course details from backend:', err);
+        // Fallback to mock data
+        if (COURSE_DATA[id]) {
+          setCourse(COURSE_DATA[id]);
+        } else {
+          setCourse(COURSE_DATA['1']);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCourseDetails();
+  }, [id]);
 
   const markComplete = () => {
-    if (!completed.includes(activeLesson)) setCompleted([...completed, activeLesson]);
-    if (activeLesson < course.lessons.length - 1) setActiveLesson(activeLesson + 1);
+    if (course && !completed.includes(activeLesson)) setCompleted([...completed, activeLesson]);
+    if (course && activeLesson < course.lessons.length - 1) setActiveLesson(activeLesson + 1);
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-full text-slate-500 font-medium py-20">
+        Loading Course Workspace...
+      </div>
+    );
+  }
+
+  if (!course) {
+    return (
+      <div className="flex items-center justify-center h-full text-slate-500 font-medium py-20">
+        Course not found.
+      </div>
+    );
+  }
+
+  const lesson = course.lessons[activeLesson] || { title: 'Untitled Lesson', content: 'No content' };
 
   return (
     <div className="flex gap-6 h-full">

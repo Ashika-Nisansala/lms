@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 
 const COURSES = [
   { id: '1', title: 'Python for Beginners', category: 'Python', description: 'Start your Python journey from scratch. Learn variables, loops, functions and more.', lessons: 12, level: 'Beginner', color: 'from-blue-500 to-cyan-500', emoji: '🐍' },
@@ -11,11 +12,42 @@ const COURSES = [
 ];
 
 export default function Courses() {
+  const [coursesList, setCoursesList] = useState([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('All');
   const navigate = useNavigate();
 
-  const filtered = COURSES.filter(c =>
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/courses');
+        const backendCourses = res.data.map(bc => ({
+          id: bc._id,
+          title: bc.title,
+          category: bc.category,
+          description: bc.description,
+          lessons: bc.lessonsCount || 0,
+          level: bc.category?.toLowerCase().includes('python') ? 'Beginner' : 'Intermediate',
+          color: bc.category?.toLowerCase().includes('python') ? 'from-blue-500 to-cyan-500' : 'from-purple-500 to-pink-500',
+          emoji: bc.category?.toLowerCase().includes('python') ? '🐍' : '💻'
+        }));
+
+        const merged = [...backendCourses];
+        COURSES.forEach(mc => {
+          if (!merged.some(bc => bc.title.toLowerCase() === mc.title.toLowerCase())) {
+            merged.push(mc);
+          }
+        });
+        setCoursesList(merged);
+      } catch (err) {
+        console.error('Failed to fetch courses:', err);
+        setCoursesList(COURSES);
+      }
+    };
+    fetchCourses();
+  }, []);
+
+  const filtered = coursesList.filter(c =>
     (filter === 'All' || c.category === filter) &&
     c.title.toLowerCase().includes(search.toLowerCase())
   );

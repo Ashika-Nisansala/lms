@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema({
   completedLessons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lesson' }],
   points: { type: Number, default: 0 },
   badges: [{ type: String }],
+  // Password Reset Fields
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date },
 }, { timestamps: true });
 
 export default mongoose.model('User', userSchema);

@@ -83,8 +83,8 @@ export default function AdminDashboard() {
             title: bc.title || 'Untitled Course',
             category: category,
             description: bc.description || '',
-            lessons: bc.lessons?.length || 0,
-            enrolled: 0,
+            lessons: bc.lessonsCount || 0,
+            enrolled: bc.enrolledCount || 0,
             emoji: category.toLowerCase().includes('python') ? '🐍' : '💻'
           };
         });
